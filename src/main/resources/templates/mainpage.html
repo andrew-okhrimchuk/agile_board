@@ -9,22 +9,157 @@
 
 </head>
 
-<body>
-    <table border="1" id = "table">
-        <tbody id = "tableBody">
-        <tr>
-            <th><p th:text = "${toDoColumn.name}"/></th>
-            <th><p th:text = "${inProcessColumn.name}"/></th>
-            <th><p th:text = "${doneColumn.name}"/></th>
-        </tr>
 
-        <tr>
-            <th id = "TO DO"><Button class = "addButton">Add new ticket</Button></th>
-            <th id = "In Progress"><Button class = "addButton">Add new ticket</Button></th>
-            <th id = "Done"><Button class = "addButton">Add new ticket</Button></th>
-        </tr>
-        </tbody>
-    </table>
+<!--<table>-->
+<!--<tr th:each="data, iterstat: ${toDoColumnTickets}">-->
+<!--&lt;!&ndash;<td th:text="${data.name}" th:id="|td${iterstat.index}|"></td>&ndash;&gt;-->
+<!---->
+<!--</tr>-->
+<!--</table>-->
+
+<body id = "body">
+<div id = "containerBlock">
+    <div id = "column1">
+        <div id = "toDoColumn">
+            <p th:text = "${toDoColumn.name}"></p>
+            <div id = "TO DO"><Button class = "addButton" style="background-color: #78FF00">Add new ticket</Button></div>
+        </div>
+        <div class="container2" th:each="data, iterstat: ${toDoColumnTickets}"  th:id="|td${iterstat.index}|" style="background-color: #78FF00">
+            <form class="ticketForm" method="post">
+                <div class="row">
+
+                    <div class="col-25">
+                        <label>Name</label>
+                    </div>
+
+                    <div class="col-75">
+                        <input type="text" class="name2" name="name" th:value = "${data.name}"  disabled = "disabled"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label>Description</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea class="description2" name="description" style="height:50px" th:text = "${data.description}" disabled = "disabled"> </textarea>
+                        <div class = "saveButton"><input type="submit" value="Save" style = "display:none"/></div>
+                    </div>
+                    <div class="col-75" style="display: none">
+                        <input  type="text" class="columnName" name="columnName" value = "TO DO"/>
+                    </div>
+                    <div class="col-75" style="display: none">
+                        <input  type="text" class="oldName" name="oldName" th:value = "${data.name}"/>
+                    </div>
+                    <div class = "buttons">
+                        <div class = "editButton">
+                            <input type="submit" value="Edit"/>
+                        </div>
+                        <div class = "moveTo">
+                            <input type="submit" value="Move to"/>
+                        </div>
+                        <div class = "deleteButton">
+                            <input type="submit" value="Delete"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id = "column2">
+        <div id = "inProgressColumn">
+            <p th:text = "${inProcessColumn.name}"></p>
+            <div id = "In Progress"><Button class = "addButton" style="background-color: #6722AF">Add new ticket</Button></div>
+        </div>
+        <div class="container2" th:each="data, iterstat: ${inProgressColumnTickets}"  th:id="|td${iterstat.index}|" style="background-color: #6722AF" >
+            <form class="ticketForm" method="post">
+                <div class="row">
+
+                    <div class="col-25">
+                        <label>Name</label>
+                    </div>
+
+                    <div class="col-75">
+                        <input type="text" class="name2" name="name" th:value = "${data.name}"  disabled = "disabled"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label>Description</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea class="description2" name="description" style="height:50px" th:text = "${data.description}" disabled = "disabled"> </textarea>
+                        <div class = "saveButton"><input type="submit" value="Save" style = "display:none"/></div>
+                    </div>
+                    <div class="col-75" style="display: none">
+                        <input  type="text" class="oldName" name="oldName" th:value = "${data.name}"/>
+                    </div>
+                    <div class="col-75" style="display: none">
+                        <input  type="text" class="columnName" name="columnName" value = "In Progress" />
+                    </div>
+
+                    <div class = "buttons">
+                        <div class = "editButton">
+                            <input type="submit" value="Edit"/>
+                        </div>
+                        <div class = "moveTo">
+                            <input type="submit" value="Move to"/>
+                        </div>
+                        <div class = "deleteButton">
+                            <input type="submit" value="Delete"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id = "column3">
+        <div id = "doneColumn">
+            <p th:text = "${doneColumn.name}"></p>
+            <div id = "Done"><Button class = "addButton"  style="background-color: #4CAF50">Add new ticket</Button></div>
+        </div>
+        <div class="container2" th:each="data, iterstat: ${doneColumnTickets}"  th:id="|td${iterstat.index}|"  style="background-color: #4CAF50">
+            <form  class="ticketForm" method="post">
+                <div class="row">
+
+                    <div class="col-25">
+                        <label>Name</label>
+                    </div>
+
+                    <div class="col-75">
+                        <input type="text" class="name2" name="name" th:value = "${data.name}" disabled = "disabled"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label>Description</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea class="description2" name="description" style="height:50px" th:text = "${data.description}" disabled = "disabled"> </textarea>
+                        <div class = "saveButton"><input type="submit" value="Save" style = "display:none"/></div>
+                    </div>
+                    <div class="col-75" style="display: none">
+                        <input  type="text" class="columnName" name="columnName" value = "Done"/>
+                    </div>
+                    <div class="col-75" style="display: none">
+                        <input  type="text" class="oldName" name="oldName" th:value = "${data.name}"/>
+                    </div>
+                    <div class = "buttons">
+                        <div class = "editButton">
+                            <input type="submit" value="Edit"/>
+                        </div>
+                        <div class = "moveTo">
+                            <input type="submit" value="Move to"/>
+                        </div>
+                        <div class = "deleteButton">
+                            <input type="submit" value="Delete"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
     <div class="container">
         <form id = "newTicketForm" action="/addticket" method="post">
@@ -51,9 +186,12 @@
                 <input type="submit" value="Add ticket"/>
             </div>
 
+            <div id = "errorBlock">
+                <p>Ticket with such name already exists!</p>
+            </div>
+
         </form>
     </div>
-
     <div id="layer"></div>
 
 </body>

@@ -26,14 +26,39 @@ public class MainPageController {
         model.addAttribute("toDoColumn", columnService.getAllColumns().get(0));
         model.addAttribute("inProcessColumn", columnService.getAllColumns().get(1));
         model.addAttribute("doneColumn", columnService.getAllColumns().get(2));
+        model.addAttribute("toDoColumnTickets", columnService.getColumnByName("TO DO").getTickets());
+        model.addAttribute("inProgressColumnTickets", columnService.getColumnByName("In Progress").getTickets());
+        model.addAttribute("doneColumnTickets", columnService.getColumnByName("Done").getTickets());
         return "mainpage";
     }
 
     @RequestMapping(path = "/addticket", method = RequestMethod.POST)
-    public @ResponseBody Ticket addNewTicket(@RequestParam String columnName, @RequestParam String name,
+    public @ResponseBody String addNewTicket(@RequestParam String columnName, @RequestParam String name,
                         @RequestParam String description){
-        System.out.println("here's column name " + columnName);
-
-        return ticketService.addNewTicket(columnName,name,description);
+        boolean result = ticketService.addNewTicket(columnName,name,description);
+        if(result == true){
+            return "true";
+        }else{
+            return "false";
+        }
     }
+
+
+    @RequestMapping(path = "/deleteticket", method = RequestMethod.POST)
+    public @ResponseBody String deleteTicket(@RequestParam String name, @RequestParam String columnName){
+        ticketService.deleteTicket(columnName, name);
+       return "true";
+    }
+
+    @RequestMapping(path = "/editticket", method = RequestMethod.POST)
+    public @ResponseBody String editTicket(@RequestParam String name,
+                                           @RequestParam String oldName,
+                                           @RequestParam String description,
+                                           @RequestParam String columnName){
+        ticketService.editTicket(oldName,name,columnName,description);
+        return "true";
+    }
+
+
+
 }

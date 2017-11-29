@@ -1,15 +1,37 @@
 /*--------------------------------Table style-------------------------------------------------------------------------*/
-table {
-    width: 100%; /* Ширина таблицы */
-    background: white; /* Цвет фона таблицы */
-    color: white; /* Цвет текста */
-    border-spacing: 1px; /* Расстояние между ячейками */
-}
-td, th {
-    background: #0d6880; /* Цвет фона ячеек */
-    padding: 5px; /* Поля вокруг текста */
+body{
+    background-color: #5A8FBC;
 }
 
+#containerBlock{
+    text-align: justify;
+    height:100%;
+    width:100%;
+    background: #0d6880;
+
+}
+
+#column1, #column2, #column3{
+    position:relative;
+
+    float:left;
+    width:33%;
+    display: inline-block;
+    height: 100%;
+}
+
+
+
+#toDoColumn, #inProgressColumn,#doneColumn{
+    position:relative;
+    text-align: center;
+    height:100%;
+    color:white;
+}
+
+#toDoAddButtonBlock,#inProgressAddButtonBlock,#doneAddButtonBlock {
+    padding:2px;
+}
 .addButton {
     background-color: #4CAF50; /* Green */
     border: none;
@@ -23,18 +45,6 @@ td, th {
 }
 
 
-/*--------------------------------Add form style----------------------------------------------------------------------*/
-
- table {
-     width: 100%; /* Ширина таблицы */
-     background: white; /* Цвет фона таблицы */
-     color: white; /* Цвет текста */
-     border-spacing: 1px; /* Расстояние между ячейками */
- }
-td, th {
-    background:#0d6880; /* Цвет фона ячеек */
-    padding: 5px; /* Поля вокруг текста */
-}
 
 .addButton {
     background-color: #4CAF50; /* Green */
@@ -47,8 +57,6 @@ td, th {
     display: inline-block;
     font-size: 16px;
 }
-
-
 
 
 
@@ -128,15 +136,14 @@ textarea{
     z-index: 5;
 }
 
-
 .container2 {
+    margin-left: 25px;
+    margin-top: 30px;
     position: relative;;
     width: 70%;
-    margin-top: 10px;
-    margin:auto;
     border-radius: 5px;
     padding: 20px;
-    background-color: #4CAF50;
+    color:white;
 }
 
 label[for = "name2"], label[for = "description2"]{
@@ -144,3 +151,42 @@ label[for = "name2"], label[for = "description2"]{
     display: inline-block;
     font-size: 14px;
 }
+
+#errorBlock{
+    display: none;
+    color: red;
+}
+
+.buttons{
+    postition:relative;
+    margin-left: 30px;
+}
+
+.deleteButton, .editButton, .moveTo{
+    position: relative;
+    padding: 5px;
+    float:left;
+}
+
+input[value = "Delete"]{
+    background-color:red;
+}
+
+input[value = "Edit"]{
+    background-color: #4C81AF;
+}
+
+input[value = "Move to"]{
+    background-color: #E75130;
+}
+
+.saveButton{
+    position:relative;
+    margin-right:100px;
+}
+
+input[value = "Save"]{
+    background-color: #43203C;
+}
+
+

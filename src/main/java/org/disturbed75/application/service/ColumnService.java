@@ -27,4 +27,6 @@ public class ColumnService {
     public List<Column> getAllColumns(){
         return columnDAO.findAll();
     }
+
+
 }

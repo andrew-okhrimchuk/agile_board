@@ -2,6 +2,7 @@
  * Created by Disturbed on 11/28/2017.
  */
 $(function(){
+    var clickCount = 0;
     var addButtons = $('.addButton');
     var layer = $('#layer');
     var container = $('.container');
@@ -21,64 +22,90 @@ $(function(){
     layer.click(function(){
         container.hide();
         $(this).fadeOut('fast');
+
     });
+
+
 
     $('#newTicketForm').submit(function(e){
         event.preventDefault();
         var m_method = $(this).attr('method');
         var m_action = $(this).attr('action');
         var m_data = $(this).serialize();
+        var error = $('#errorBlock');
         $.ajax({
             type: m_method,
             url: m_action,
             data: m_data,
             success: function(response){
-                switch (columnName.val()){
-                    case "TO DO":
-                        $('#table > tbody:last').append('<tr><th><div class="container2" "><form action="">' +
-                            '<div class="row"><div class="col-25"><label for="name2">Name</label>' +
-                            '</div><div class="col-75"><input id = "inputName2" type="text" id="name2" name="name2" disabled/>' +
-                            '</div></div><div class="row"><div class="col-25">' +
-                            '<label for="description1">Description</label> </div><div class="col-75">' +
-                            '<textarea id="description1" name="description1" style = "height: 75px" disabled="disabled"></textarea>' +
-                            ' </div></div></form></div></th><th></th><th></th></tr>');
-                        $('#inputName2').attr('value', response.name);
-                        $('#description1').text(response.description);
-                        break;
-
-                    case "In Progress":
-                        $('#table > tbody:last').append('<tr><th></th>><th><div class="container2" "><form action="">' +
-                            '<div class="row"><div class="col-25"><label for="name2">Name</label>' +
-                            '</div><div class="col-75"><input id = "inputName2" type="text" id="name2" name="name2" disabled/>' +
-                            '</div></div><div class="row"><div class="col-25">' +
-                            '<label for="description1">Description</label> </div><div class="col-75">' +
-                            '<textarea id="description1" name="description1" style = "height: 75px" disabled="disabled"></textarea>' +
-                            ' </div></div></form></div></th><th></th></tr>');
-                        $('#inputName2').attr('value', response.name);
-                        $('#description1').text(response.description);
-                        break;
-
-                    case "Done":
-                        $('#table > tbody:last').append('<tr><th></th><th></th><th><div class="container2" "><form action="">' +
-                            '<div class="row"><div class="col-25"><label for="name2">Name</label>' +
-                            '</div><div class="col-75"><input id = "inputName2" type="text" id="name2" name="name2" disabled/>' +
-                            '</div></div><div class="row"><div class="col-25">' +
-                            '<label for="description1">Description</label> </div><div class="col-75">' +
-                            '<textarea id="description1" name="description1" style = "height: 75px" disabled="disabled"></textarea>' +
-                            ' </div></div></form></div></th></tr>');
-                        $('#inputName2').attr('value', response.name);
-                        $('#description1').text(response.description);
-                        break;
+                if(response == "false"){
+                    error.show();
+                } else{
+                    window.location="http://localhost:8080/greeting";
                 }
-                container.hide();
-                layer.fadeOut('fast');
-                alert(columnName.val());
-
 
             }
 
         });
     });
+
+    $('.deleteButton').click(function (e){
+            var formToSubmit =  $(this).parent().parent().parent();
+            formToSubmit.attr('action', "/deleteticket");
+            formToSubmit.find('input[name = "name"]').removeAttr('disabled');
+            formToSubmit.submit(function (e){
+                var m_method = formToSubmit .attr('method');
+                var m_action = formToSubmit .attr('action');
+                var m_data  = formToSubmit.serialize();
+                $.ajax({
+                    type: m_method,
+                    url: m_action,
+                    data: m_data,
+                    success: function(response){
+                            window.location="http://localhost:8080/greeting";
+                    }
+
+                });
+
+            });
+    });
+
+    $('.editButton').click(function(e){
+        clickCount ++;
+        event.preventDefault();
+        var formToSubmit =  $(this).parent().parent().parent();
+        var saveButton =  formToSubmit.find('input[value = "Save"]').show();
+        var description = formToSubmit.find('textarea');
+        formToSubmit.attr('action', "/editticket");
+        formToSubmit.find('input[name = "name"]').removeAttr('disabled');
+        description.removeAttr('disabled');
+        formToSubmit.find('input[value = "Delete"]').attr('disabled',"disabled");
+        formToSubmit.find('input[value = "Move to"]').attr('disabled',"disabled");
+        var editButton = formToSubmit.find('input[value = "Edit"]');
+        var text = description.val();
+        if( clickCount == 2) {
+            window.location = "http://localhost:8080/greeting";
+        }
+        saveButton.click(function(e){
+            formToSubmit.submit(function (e){
+                var m_method = formToSubmit .attr('method');
+                var m_action = formToSubmit .attr('action');
+                var m_data  = formToSubmit.serialize();
+                $.ajax({
+                    type: m_method,
+                    url: m_action,
+                    data: m_data,
+                    success: function(response){
+                            window.location="http://localhost:8080/greeting";
+                    }
+
+                });
+
+            });
+        });
+    });
+
+
 
 
 });
