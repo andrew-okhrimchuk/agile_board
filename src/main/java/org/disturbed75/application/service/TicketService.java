@@ -1,6 +1,7 @@
 package org.disturbed75.application.service;
 
 import org.disturbed75.application.DAO.ColumnDAO;
+import org.disturbed75.application.DAO.TicketDAO;
 import org.disturbed75.application.container.ValuesContainer;
 import org.disturbed75.application.entity.Column;
 import org.disturbed75.application.entity.Ticket;
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by Disturbed on 11/28/2017.
  */
 @Service
-public class TicketService {
+public class TicketService implements TicketDAO {
 
     @Autowired
     private ColumnService columnService;
@@ -22,6 +23,7 @@ public class TicketService {
     @Autowired
     private ColumnDAO columnDAO;
 
+    @Override
     public boolean addNewTicket(String columnName, String ticketName, String ticketDescription){
         List<Ticket> allTickets = getTicketsFromAllColumns();
         for(Ticket ticket : allTickets){
@@ -36,7 +38,8 @@ public class TicketService {
         return true;
     }
 
-    public boolean deleteTicket(String columnName, String ticketName){
+    @Override
+    public void deleteTicket(String columnName, String ticketName){
         Column column  = columnService.getColumnByName(columnName);
         for(Ticket ticket: column.getTickets()){
             if(ticket.getName().equals(ticketName)){
@@ -46,10 +49,10 @@ public class TicketService {
         }
 
         columnDAO.save(column);
-        return true;
     }
 
-    public boolean editTicket(String oldName, String newName, String columnName, String description){
+    @Override
+    public void editTicket(String oldName, String newName, String columnName, String description){
         Column column  = columnService.getColumnByName(columnName);
         int counter = 0;
         for(int i = 0; i< column.getTickets().size(); i++){
@@ -61,9 +64,9 @@ public class TicketService {
         column.getTickets().get(counter).setName(newName);
         column.getTickets().get(counter).setDescription(description);
         columnDAO.save(column);
-        return true;
     }
 
+    @Override
     public List<Ticket> getTicketsFromAllColumns(){
         List<Ticket> allTickets = new ArrayList<>();
         List<Ticket> toDoTickets = columnService.getColumnByName(ValuesContainer.TO_DO_COLUMN_NAME).getTickets();
@@ -73,6 +76,14 @@ public class TicketService {
         allTickets.addAll(0, inProgressTickets);
         allTickets.addAll(0, doneTickets);
         return allTickets;
+    }
+
+    @Override
+    public void moveTicket(String name, String description, String column, String newColumn) {
+            deleteTicket(column,name);
+            Column column1 = columnService.getColumnByName(newColumn);
+            column1.getTickets().add(new Ticket(name, description));
+            columnDAO.save(column1);
     }
 
 
