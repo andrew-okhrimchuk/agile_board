@@ -1,8 +1,7 @@
 package org.disturbed75.application.controller;
 
-import org.disturbed75.application.entity.Ticket;
+import org.disturbed75.application.DAO.TicketDAO;
 import org.disturbed75.application.service.ColumnService;
-import org.disturbed75.application.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +18,7 @@ public class MainPageController {
     private ColumnService columnService;
 
     @Autowired
-    private TicketService ticketService;
+    private TicketDAO ticketService;
 
     @RequestMapping(path = "/greeting", method = RequestMethod.GET)
     public String index(Model model){
@@ -45,18 +44,27 @@ public class MainPageController {
 
 
     @RequestMapping(path = "/deleteticket", method = RequestMethod.POST)
-    public @ResponseBody String deleteTicket(@RequestParam String name, @RequestParam String columnName){
+    public  String deleteTicket(@RequestParam String name, @RequestParam String columnName){
         ticketService.deleteTicket(columnName, name);
-       return "true";
+       return "redirect:/greeting";
     }
 
     @RequestMapping(path = "/editticket", method = RequestMethod.POST)
-    public @ResponseBody String editTicket(@RequestParam String name,
+    public String editTicket(@RequestParam String name,
                                            @RequestParam String oldName,
                                            @RequestParam String description,
                                            @RequestParam String columnName){
         ticketService.editTicket(oldName,name,columnName,description);
-        return "true";
+       return  "redirect:/greeting";
+    }
+
+    @RequestMapping(path = "/moveticket", method = RequestMethod.POST)
+    public String moveTicket(@RequestParam String name,
+                             @RequestParam String description,
+                             @RequestParam String columnName,
+                             @RequestParam String newColumn){
+        ticketService.moveTicket(name,description, columnName,newColumn);
+        return  "redirect:/greeting";
     }
 
 
