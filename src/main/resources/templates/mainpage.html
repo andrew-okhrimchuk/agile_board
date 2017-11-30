@@ -4,27 +4,19 @@
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <link th:href="@{/mainpage.css}" rel="stylesheet" />
+    <link th:href="@{/css/mainpage.css}" rel="stylesheet" />
     <script type="text/javascript" th:src="@{/js/mainpage.js}" />
 
 </head>
-
-
-<!--<table>-->
-<!--<tr th:each="data, iterstat: ${toDoColumnTickets}">-->
-<!--&lt;!&ndash;<td th:text="${data.name}" th:id="|td${iterstat.index}|"></td>&ndash;&gt;-->
-<!---->
-<!--</tr>-->
-<!--</table>-->
 
 <body id = "body">
 <div id = "containerBlock">
     <div id = "column1">
         <div id = "toDoColumn">
             <p th:text = "${toDoColumn.name}"></p>
-            <div id = "TO DO"><Button class = "addButton" style="background-color: #78FF00">Add new ticket</Button></div>
+            <div id = "TO DO"><Button class = "addButton" style="background-color: #ff4f17">Add new ticket</Button></div>
         </div>
-        <div class="container2" th:each="data, iterstat: ${toDoColumnTickets}"  th:id="|td${iterstat.index}|" style="background-color: #78FF00">
+        <div class="container2" th:each="data, iterstat: ${toDoColumnTickets}"  th:id="|td${iterstat.index}|" style="background-color: #FF4F17">
             <form class="ticketForm" method="post">
                 <div class="row">
 
@@ -33,7 +25,7 @@
                     </div>
 
                     <div class="col-75">
-                        <input type="text" class="name2" name="name" th:value = "${data.name}"  disabled = "disabled"/>
+                        <input type="text" class="name2" name="name"  maxlength="30" th:value = "${data.name}"  disabled = "disabled"/>
                     </div>
                 </div>
                 <div class="row">
@@ -41,7 +33,7 @@
                         <label>Description</label>
                     </div>
                     <div class="col-75">
-                        <textarea class="description2" name="description" style="height:50px" th:text = "${data.description}" disabled = "disabled"> </textarea>
+                        <textarea class="description2" name="description"  maxlength="400" style="height:50px" th:text = "${data.description}" disabled = "disabled"> </textarea>
                         <div class = "saveButton"><input type="submit" value="Save" style = "display:none"/></div>
                     </div>
                     <div class="col-75" style="display: none">
@@ -50,20 +42,32 @@
                     <div class="col-75" style="display: none">
                         <input  type="text" class="oldName" name="oldName" th:value = "${data.name}"/>
                     </div>
-                    <div class = "buttons">
-                        <div class = "editButton">
-                            <input type="submit" value="Edit"/>
-                        </div>
-                        <div class = "moveTo">
-                            <input type="submit" value="Move to"/>
-                        </div>
-                        <div class = "deleteButton">
-                            <input type="submit" value="Delete"/>
-                        </div>
+                    <div class="col-75" style="display: none">
+                        <input  type="text" class="newColumn" name="newColumn" />
                     </div>
                 </div>
             </form>
+            <div class = "buttons">
+                <div class = "editButton">
+                    <input type="submit" value="Edit"/>
+                </div>
+                <div class = "deleteButton">
+                    <input type="submit" value="Delete"/>
+                </div>
+                <div class = "moveToButton">
+                    <input type="submit" value="Move to"/>
+                </div>
+            </div>
+            <div class = "menu" style = "display:none">
+                <div class = "dropMenu">
+                    <div class="dropdown">
+                        <Button class = "menuButtons" value="In Progress">In Progress</Button>
+                        <Button class = "menuButtons" value="Done">Done</Button>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
     <div id = "column2">
         <div id = "inProgressColumn">
@@ -79,7 +83,7 @@
                     </div>
 
                     <div class="col-75">
-                        <input type="text" class="name2" name="name" th:value = "${data.name}"  disabled = "disabled"/>
+                        <input type="text"  maxlength="30" class="name2" name="name" th:value = "${data.name}"  disabled = "disabled"/>
                     </div>
                 </div>
                 <div class="row">
@@ -87,31 +91,43 @@
                         <label>Description</label>
                     </div>
                     <div class="col-75">
-                        <textarea class="description2" name="description" style="height:50px" th:text = "${data.description}" disabled = "disabled"> </textarea>
+                        <textarea  maxlength="400" class="description2" name="description" style="height:50px" th:text = "${data.description}" disabled = "disabled"> </textarea>
                         <div class = "saveButton"><input type="submit" value="Save" style = "display:none"/></div>
                     </div>
                     <div class="col-75" style="display: none">
                         <input  type="text" class="oldName" name="oldName" th:value = "${data.name}"/>
                     </div>
                     <div class="col-75" style="display: none">
-                        <input  type="text" class="columnName" name="columnName" value = "In Progress" />
+                        <input  type="text" class="newColumn" name="newColumn" />
                     </div>
-
-                    <div class = "buttons">
-                        <div class = "editButton">
-                            <input type="submit" value="Edit"/>
-                        </div>
-                        <div class = "moveTo">
-                            <input type="submit" value="Move to"/>
-                        </div>
-                        <div class = "deleteButton">
-                            <input type="submit" value="Delete"/>
-                        </div>
+                    <div class="col-75" style="display: none">
+                        <input  type="text" class="columnName" name="columnName" value = "In Progress" />
                     </div>
                 </div>
             </form>
+            <div class = "buttons">
+                <div class = "editButton">
+                    <input type="submit" value="Edit"/>
+                </div>
+                <div class = "deleteButton">
+                    <input type="submit" value="Delete"/>
+                </div>
+                <div class = "moveToButton">
+                    <input type="submit" value="Move to"/>
+                </div>
+            </div>
+            <div class = "menu" style = "display:none">
+                <div class = "dropMenu">
+                    <div class="dropdown">
+                        <Button class = "menuButtons" value="TO DO">TO DO</Button>
+                        <Button class = "menuButtons" value="Done">Done</Button>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
+
     <div id = "column3">
         <div id = "doneColumn">
             <p th:text = "${doneColumn.name}"></p>
@@ -126,7 +142,7 @@
                     </div>
 
                     <div class="col-75">
-                        <input type="text" class="name2" name="name" th:value = "${data.name}" disabled = "disabled"/>
+                        <input type="text" class="name2" maxlength="30" name="name" th:value = "${data.name}" disabled = "disabled"/>
                     </div>
                 </div>
                 <div class="row">
@@ -134,7 +150,7 @@
                         <label>Description</label>
                     </div>
                     <div class="col-75">
-                        <textarea class="description2" name="description" style="height:50px" th:text = "${data.description}" disabled = "disabled"> </textarea>
+                        <textarea class="description2"  maxlength="400" name="description" style="height:50px" th:text = "${data.description}" disabled = "disabled"> </textarea>
                         <div class = "saveButton"><input type="submit" value="Save" style = "display:none"/></div>
                     </div>
                     <div class="col-75" style="display: none">
@@ -143,20 +159,32 @@
                     <div class="col-75" style="display: none">
                         <input  type="text" class="oldName" name="oldName" th:value = "${data.name}"/>
                     </div>
-                    <div class = "buttons">
-                        <div class = "editButton">
-                            <input type="submit" value="Edit"/>
-                        </div>
-                        <div class = "moveTo">
-                            <input type="submit" value="Move to"/>
-                        </div>
-                        <div class = "deleteButton">
-                            <input type="submit" value="Delete"/>
-                        </div>
+                    <div class="col-75" style="display: none">
+                        <input  type="text" class="newColumn" name="newColumn" />
                     </div>
                 </div>
             </form>
+            <div class = "buttons">
+                <div class = "editButton">
+                    <input type="submit" value="Edit"/>
+                </div>
+                <div class = "deleteButton">
+                    <input type="submit" value="Delete"/>
+                </div>
+                <div class = "moveToButton">
+                    <input type="submit" value="Move to"/>
+                </div>
+            </div>
+            <div class = "menu" style = "display:none">
+                <div class = "dropMenu">
+                    <div class="dropdown">
+                        <Button class = "menuButtons" value="TO DO">TO DO</Button>
+                        <Button class = "menuButtons" value="In Progress">In Progress</Button>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 </div>
 
@@ -168,7 +196,7 @@
                     <label for="name">Name</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="name" name="name" placeholder="Ticket name"/>
+                    <input type="text" id="name" name="name" maxlength="30"  placeholder="Ticket name"/>
                 </div>
             </div>
             <div class="row">
@@ -176,7 +204,7 @@
                     <label for="description">Description</label>
                 </div>
                 <div class="col-75">
-                    <textarea id="description" name="description" placeholder="Write something.." style="height:200px"></textarea>
+                    <textarea id="description" maxlength="400" name="description" placeholder="Write something.." style="height:200px"></textarea>
                 </div>
             </div>
             <div class="col-75">
