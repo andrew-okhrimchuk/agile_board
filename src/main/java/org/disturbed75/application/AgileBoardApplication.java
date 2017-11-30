@@ -1,10 +1,8 @@
 package org.disturbed75.application;
 
 
-import org.disturbed75.application.DAO.ColumnDAO;
 import org.disturbed75.application.container.ValuesContainer;
 import org.disturbed75.application.entity.Column;
-import org.disturbed75.application.entity.Ticket;
 import org.disturbed75.application.service.ColumnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,7 +11,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication(scanBasePackages ={"org.disturbed75.application.service","org.disturbed75.application.controller"})
 @EnableAutoConfiguration
@@ -32,6 +29,12 @@ public class AgileBoardApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
+		if(columnService.getColumnByName(ValuesContainer.TO_DO_COLUMN_NAME) != null ||
+				columnService.getColumnByName(ValuesContainer.IN_PROGRESS_COLUMN_NAME) != null ||
+				columnService.getColumnByName(ValuesContainer.DONE_COLUMN_NAME) != null){
+			return;
+
+		}
 		toDoColumn.setTickets(new ArrayList<>());
 		inProgressColumn.setTickets(new ArrayList<>());
 		doneColumn.setTickets(new ArrayList<>());
