@@ -2,6 +2,7 @@
  * Created by Disturbed on 11/28/2017.
  */
 $(function(){
+
     var clickCount = 0;
     var addButtons = $('.addButton');
     var layer = $('#layer');
@@ -50,30 +51,16 @@ $(function(){
     });
 
     $('.deleteButton').click(function (e){
-            var formToSubmit =  $(this).parent().parent().parent();
+            var formToSubmit =  $(this).parent().parent().children(":first");
             formToSubmit.attr('action', "/deleteticket");
             formToSubmit.find('input[name = "name"]').removeAttr('disabled');
-            formToSubmit.submit(function (e){
-                var m_method = formToSubmit .attr('method');
-                var m_action = formToSubmit .attr('action');
-                var m_data  = formToSubmit.serialize();
-                $.ajax({
-                    type: m_method,
-                    url: m_action,
-                    data: m_data,
-                    success: function(response){
-                            window.location="http://localhost:8080/greeting";
-                    }
-
-                });
-
-            });
+            formToSubmit.submit();
     });
 
     $('.editButton').click(function(e){
         clickCount ++;
         event.preventDefault();
-        var formToSubmit =  $(this).parent().parent().parent();
+        var formToSubmit =  $(this).parent().parent().children(":first");
         var saveButton =  formToSubmit.find('input[value = "Save"]').show();
         var description = formToSubmit.find('textarea');
         formToSubmit.attr('action', "/editticket");
@@ -81,28 +68,33 @@ $(function(){
         description.removeAttr('disabled');
         formToSubmit.find('input[value = "Delete"]').attr('disabled',"disabled");
         formToSubmit.find('input[value = "Move to"]').attr('disabled',"disabled");
-        var editButton = formToSubmit.find('input[value = "Edit"]');
-        var text = description.val();
         if( clickCount == 2) {
             window.location = "http://localhost:8080/greeting";
         }
         saveButton.click(function(e){
-            formToSubmit.submit(function (e){
-                var m_method = formToSubmit .attr('method');
-                var m_action = formToSubmit .attr('action');
-                var m_data  = formToSubmit.serialize();
-                $.ajax({
-                    type: m_method,
-                    url: m_action,
-                    data: m_data,
-                    success: function(response){
-                            window.location="http://localhost:8080/greeting";
-                    }
-
-                });
-
-            });
+            formToSubmit.submit();
         });
+    });
+
+    $('.moveToButton').click(function(){
+        var menu = $(this).parent().parent().children(":nth-child(3)");
+        clickCount ++;
+        if(clickCount == 2 || clickCount  == 0){
+            menu.hide();
+            clickCount = 0;
+        }else{
+            menu.show();
+        }
+        $('.menuButtons').click(function(){
+           var submitForm = $(this).parent().parent().parent().parent().children(":first");
+           var newColumn =  $(this).val();
+           submitForm.attr('action', "/moveticket");
+            submitForm.find('input[name = "newColumn"]').attr('value', newColumn);
+           submitForm.find('input[name = "name"]').removeAttr('disabled');
+            submitForm.find('textarea').removeAttr('disabled');
+           submitForm.submit();
+        });
+
     });
 
 
