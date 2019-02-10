@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
 
-@SpringBootApplication(scanBasePackages ={"org.disturbed75.application.service","org.disturbed75.application.controller"})
+@SpringBootApplication(scanBasePackages ={"org.disturbed75.application.service","org.disturbed75.application.controller", "org.disturbed75.application.security"})
 @EnableAutoConfiguration
 public class AgileBoardApplication implements CommandLineRunner {
 

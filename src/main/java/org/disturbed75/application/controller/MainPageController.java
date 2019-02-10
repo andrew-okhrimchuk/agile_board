@@ -8,9 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-/**
- * Created by Disturbed on 11/28/2017.
- */
+
 @Controller
 public class MainPageController {
 
@@ -20,7 +18,9 @@ public class MainPageController {
     @Autowired
     private TicketDAO ticketService;
 
-    @RequestMapping(path = "/greeting", method = RequestMethod.GET)
+
+
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index(Model model){
         model.addAttribute("toDoColumn", columnService.getAllColumns().get(0));
         model.addAttribute("inProcessColumn", columnService.getAllColumns().get(1));
@@ -30,6 +30,12 @@ public class MainPageController {
         model.addAttribute("doneColumnTickets", columnService.getColumnByName("Done").getTickets());
         return "mainpage";
     }
+
+    @RequestMapping(path = "/login", method = RequestMethod.GET)
+    public String login(){
+        return "login";
+    }
+
 
     @RequestMapping(path = "/addticket", method = RequestMethod.POST)
     public @ResponseBody String addNewTicket(@RequestParam String columnName, @RequestParam String name,
@@ -46,7 +52,7 @@ public class MainPageController {
     @RequestMapping(path = "/deleteticket", method = RequestMethod.POST)
     public  String deleteTicket(@RequestParam String name, @RequestParam String columnName){
         ticketService.deleteTicket(columnName, name);
-       return "redirect:/greeting";
+       return "redirect:/";
     }
 
     @RequestMapping(path = "/editticket", method = RequestMethod.POST)
@@ -55,7 +61,7 @@ public class MainPageController {
                                            @RequestParam String description,
                                            @RequestParam String columnName){
         ticketService.editTicket(oldName,name,columnName,description);
-       return  "redirect:/greeting";
+       return  "redirect:/";
     }
 
     @RequestMapping(path = "/moveticket", method = RequestMethod.POST)
@@ -64,7 +70,7 @@ public class MainPageController {
                              @RequestParam String columnName,
                              @RequestParam String newColumn){
         ticketService.moveTicket(name,description, columnName,newColumn);
-        return  "redirect:/greeting";
+        return  "redirect:/";
     }
 
 

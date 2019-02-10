@@ -7,11 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by Disturbed on 11/28/2017.
- */
 @Service
-public class ColumnService {
+public class ColumnService  {
 
     @Autowired
     private ColumnDAO columnDAO;

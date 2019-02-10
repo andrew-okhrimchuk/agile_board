@@ -4,9 +4,7 @@ import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
-/**
- * Created by Disturbed on 11/28/2017.
- */
+
 public class Column {
 
     @Id

@@ -4,9 +4,7 @@ import org.disturbed75.application.entity.Ticket;
 
 import java.util.List;
 
-/**
- * Created by Disturbed on 11/30/2017.
- */
+
 public interface TicketDAO {
 
     boolean addNewTicket(String columnName, String ticketName, String ticketDescription);
