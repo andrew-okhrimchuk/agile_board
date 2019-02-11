@@ -16,9 +16,10 @@ import java.util.ArrayList;
 @EnableAutoConfiguration
 public class AgileBoardApplication implements CommandLineRunner {
 
-	private final Column toDoColumn  = new Column(ValuesContainer.TO_DO_COLUMN_NAME);
+	/*private final Column toDoColumn  = new Column(ValuesContainer.TO_DO_COLUMN_NAME);
 	private final Column inProgressColumn = new Column(ValuesContainer.IN_PROGRESS_COLUMN_NAME);
-	private final Column doneColumn = new Column(ValuesContainer.DONE_COLUMN_NAME);
+	private final Column doneColumn = new Column(ValuesContainer.DONE_COLUMN_NAME);*/
+	private final Column user = new Column(ValuesContainer.USER);
 
 	@Autowired
 	private ColumnService columnService;
@@ -29,19 +30,11 @@ public class AgileBoardApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-		if(columnService.getColumnByName(ValuesContainer.TO_DO_COLUMN_NAME) != null ||
-				columnService.getColumnByName(ValuesContainer.IN_PROGRESS_COLUMN_NAME) != null ||
-				columnService.getColumnByName(ValuesContainer.DONE_COLUMN_NAME) != null){
+		if(columnService.getColumnByName(ValuesContainer.USER) != null){
 			return;
-
 		}
-		toDoColumn.setTickets(new ArrayList<>());
-		inProgressColumn.setTickets(new ArrayList<>());
-		doneColumn.setTickets(new ArrayList<>());
-
-		columnService.addNewColumn(toDoColumn);
-		columnService.addNewColumn(inProgressColumn);
-		columnService.addNewColumn(doneColumn);
+		user.setTickets(new ArrayList<>());
+		columnService.addNewColumn(user);
 
 
 
