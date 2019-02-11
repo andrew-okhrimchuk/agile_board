@@ -30,14 +30,6 @@ public class AgileBoardApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-		if(columnService.getColumnByName(ValuesContainer.USER) != null){
-			return;
-		}
-		user.setTickets(new ArrayList<>());
-		columnService.addNewColumn(user);
-
-
-
 
 
 }
