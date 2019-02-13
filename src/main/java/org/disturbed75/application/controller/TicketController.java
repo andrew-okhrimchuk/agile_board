@@ -21,7 +21,7 @@ public class TicketController {
     @Autowired
     private TicketDAO ticketService;
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @RequestMapping(path = "/greeting", method = RequestMethod.GET)
     public String index(Model model){
         model.addAttribute("toDoColumn", columnService.getAllColumns().get(0));
         model.addAttribute("inProcessColumn", columnService.getAllColumns().get(1));
@@ -46,7 +46,7 @@ public class TicketController {
     @RequestMapping(path = "/deleteticket", method = RequestMethod.POST)
     public  String deleteTicket(@RequestParam String name, @RequestParam String columnName){
         ticketService.deleteTicket(columnName, name);
-       return "redirect:/";
+       return "redirect:/greeting";
     }
 
     @RequestMapping(path = "/editticket", method = RequestMethod.POST)
@@ -55,7 +55,7 @@ public class TicketController {
                                            @RequestParam String description,
                                            @RequestParam String columnName){
         ticketService.editTicket(oldName,name,columnName,description);
-       return  "redirect:/";
+       return  "redirect:/greeting";
     }
 
     @RequestMapping(path = "/moveticket", method = RequestMethod.POST)
@@ -64,7 +64,7 @@ public class TicketController {
                              @RequestParam String columnName,
                              @RequestParam String newColumn){
         ticketService.moveTicket(name,description, columnName,newColumn);
-        return  "redirect:/";
+        return  "redirect:/greeting";
     }
 
 }
