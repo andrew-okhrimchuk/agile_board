@@ -17,10 +17,15 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
+        System.out.println("username = [" + username + "]");
+
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new MyUserPrincipal(user);
+        System.out.println("user.getUsername() = [" + user.getUsername() + "]" + "user.getPassword = [" + user.getPassword() + "]");
+        MyUserPrincipal test = new MyUserPrincipal(user);
+        System.out.println(test.getAuthorities()+" - " + test.getUsername() + " - " + test.getPassword());
+        return test;
     }
 }

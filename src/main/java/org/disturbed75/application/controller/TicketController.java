@@ -1,24 +1,25 @@
 package org.disturbed75.application.controller;
 
 import org.disturbed75.application.DAO.TicketDAO;
+import org.disturbed75.application.DAO.UserDAO;
+import org.disturbed75.application.entity.User;
 import org.disturbed75.application.service.ColumnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
 
 @Controller
-public class MainPageController {
+public class TicketController {
 
     @Autowired
     private ColumnService columnService;
 
     @Autowired
     private TicketDAO ticketService;
-
-
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index(Model model){
@@ -31,12 +32,6 @@ public class MainPageController {
         return "mainpage";
     }
 
-    @RequestMapping(path = "/login", method = RequestMethod.GET)
-    public String login(){
-        return "login";
-    }
-
-
     @RequestMapping(path = "/addticket", method = RequestMethod.POST)
     public @ResponseBody String addNewTicket(@RequestParam String columnName, @RequestParam String name,
                         @RequestParam String description){
@@ -47,7 +42,6 @@ public class MainPageController {
             return "false";
         }
     }
-
 
     @RequestMapping(path = "/deleteticket", method = RequestMethod.POST)
     public  String deleteTicket(@RequestParam String name, @RequestParam String columnName){
@@ -72,7 +66,5 @@ public class MainPageController {
         ticketService.moveTicket(name,description, columnName,newColumn);
         return  "redirect:/";
     }
-
-
 
 }
