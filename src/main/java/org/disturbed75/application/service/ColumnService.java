@@ -2,6 +2,7 @@ package org.disturbed75.application.service;
 
 import org.disturbed75.application.DAO.ColumnDAO;
 import org.disturbed75.application.entity.Column;
+import org.disturbed75.application.security.MyUserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +14,27 @@ public class ColumnService  {
     @Autowired
     private ColumnDAO columnDAO;
 
-    public void addNewColumn(Column column){
-        columnDAO.save(column);
-    }
-
     public Column getColumnByName(String name){
-        return columnDAO.getColumnByName(name);
+
+
+        final String username = MyUserPrincipal.get().getUsername();
+        List<Column> lists =  columnDAO.getColumnByName(name);
+        if (lists == null){return null;}
+
+        for (Column xx:lists)
+        {System.out.println("xx = " + xx);        }
+
+        for (Column list:lists) {
+            if (list.getUsername().equals(username)) {
+                return  list;
+            }
+        }
+        return null;
     }
 
     public List<Column> getAllColumns(){
-        return columnDAO.findAll();
+        final String username = MyUserPrincipal.get().getUsername();
+        return columnDAO.getColumnByUsername(username);
     }
-
 
 }

@@ -23,7 +23,7 @@ public class AgileBoardApplication implements CommandLineRunner {
 	/*private final Column toDoColumn  = new Column(ValuesContainer.TO_DO_COLUMN_NAME);
 	private final Column inProgressColumn = new Column(ValuesContainer.IN_PROGRESS_COLUMN_NAME);
 	private final Column doneColumn = new Column(ValuesContainer.DONE_COLUMN_NAME);*/
-	private final Column user = new Column(ValuesContainer.USER);
+	//private final Column user = new Column(ValuesContainer.USER);
 
 	@Autowired
 	private ColumnService columnService;

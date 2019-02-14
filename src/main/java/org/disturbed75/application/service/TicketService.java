@@ -87,21 +87,33 @@ public class TicketService implements TicketDAO {
 
 
     public void start(){
-        final String username = MyUserPrincipal.get().getUsername();
+
+        List <Column> ounList = columnService.getAllColumns();
+        List<Column> getAllColumns2 = columnDAO.getColumnByName(ValuesContainer.TO_DO_COLUMN_NAME);
+        for (Column xx:
+        getAllColumns2) {
+            columnDAO.delete(xx);
+        }
+
+
+
+
+
 
         Column toDoColumnName =  columnService.getColumnByName(ValuesContainer.TO_DO_COLUMN_NAME);
         Column inProgressColumnName =  columnService.getColumnByName(ValuesContainer.IN_PROGRESS_COLUMN_NAME);
         Column doneColumnName =  columnService.getColumnByName(ValuesContainer.DONE_COLUMN_NAME);
-        System.out.println("toDoColumnName = " + toDoColumnName);
+       /* System.out.println("toDoColumnName = " + toDoColumnName);
         System.out.println("inProgressColumnName = " + inProgressColumnName);
-        System.out.println("doneColumnName = " + doneColumnName);
+        System.out.println("doneColumnName = " + doneColumnName);*/
 
        /* if(    toDoColumnName.getUsername().equalsIgnoreCase("admin")||
                 inProgressColumnName.getUsername().equalsIgnoreCase("admin")  ||
                 doneColumnName.getUsername().equalsIgnoreCase("admin")){
             return;
 		}*/
-        final Column toDoColumn  = new Column(ValuesContainer.TO_DO_COLUMN_NAME);
+
+        /*final Column toDoColumn  = new Column(ValuesContainer.TO_DO_COLUMN_NAME);
         final Column inProgressColumn = new Column(ValuesContainer.IN_PROGRESS_COLUMN_NAME);
         final Column doneColumn = new Column(ValuesContainer.DONE_COLUMN_NAME);
 
@@ -116,7 +128,7 @@ public class TicketService implements TicketDAO {
 
         columnService.addNewColumn(toDoColumn);
         columnService.addNewColumn(inProgressColumn);
-        columnService.addNewColumn(doneColumn);
+        columnService.addNewColumn(doneColumn);*/
     }
 
 
