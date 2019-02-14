@@ -5,6 +5,7 @@ import org.disturbed75.application.DAO.TicketDAO;
 import org.disturbed75.application.container.ValuesContainer;
 import org.disturbed75.application.entity.Column;
 import org.disturbed75.application.entity.Ticket;
+import org.disturbed75.application.security.MyUserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,6 +84,41 @@ public class TicketService implements TicketDAO {
             column1.getTickets().add(new Ticket(name, description));
             columnDAO.save(column1);
     }
+
+
+    public void start(){
+        final String username = MyUserPrincipal.get().getUsername();
+
+        Column toDoColumnName =  columnService.getColumnByName(ValuesContainer.TO_DO_COLUMN_NAME);
+        Column inProgressColumnName =  columnService.getColumnByName(ValuesContainer.IN_PROGRESS_COLUMN_NAME);
+        Column doneColumnName =  columnService.getColumnByName(ValuesContainer.DONE_COLUMN_NAME);
+        System.out.println("toDoColumnName = " + toDoColumnName);
+        System.out.println("inProgressColumnName = " + inProgressColumnName);
+        System.out.println("doneColumnName = " + doneColumnName);
+
+       /* if(    toDoColumnName.getUsername().equalsIgnoreCase("admin")||
+                inProgressColumnName.getUsername().equalsIgnoreCase("admin")  ||
+                doneColumnName.getUsername().equalsIgnoreCase("admin")){
+            return;
+		}*/
+        final Column toDoColumn  = new Column(ValuesContainer.TO_DO_COLUMN_NAME);
+        final Column inProgressColumn = new Column(ValuesContainer.IN_PROGRESS_COLUMN_NAME);
+        final Column doneColumn = new Column(ValuesContainer.DONE_COLUMN_NAME);
+
+        toDoColumn.setTickets(new ArrayList<>());
+        toDoColumn.setUsername(username);
+
+        inProgressColumn.setTickets(new ArrayList<>());
+        inProgressColumn.setUsername(username);
+
+        doneColumn.setTickets(new ArrayList<>());
+        doneColumn.setUsername(username);
+
+        columnService.addNewColumn(toDoColumn);
+        columnService.addNewColumn(inProgressColumn);
+        columnService.addNewColumn(doneColumn);
+    }
+
 
 
 }

@@ -1,26 +1,20 @@
 package org.disturbed75.application.controller;
 
-import org.disturbed75.application.DAO.TicketDAO;
-import org.disturbed75.application.DAO.UserDAO;
 import org.disturbed75.application.entity.User;
-import org.disturbed75.application.service.ColumnService;
+import org.disturbed75.application.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import static org.disturbed75.application.util.UserUtil.prepareToSave;
-
 
 @Controller
 public class RegistedUserController {
 
-
-    private UserDAO userDAO;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private MyUserDetailsService myUserDetailsService;
+
 
     @ModelAttribute("user")
     public User userRegistrationDto() {
@@ -41,7 +35,7 @@ public class RegistedUserController {
     public String registerUserAccount(@ModelAttribute("user") User user,
                                       BindingResult result){
 
-        User existing = userDAO.findByUsername(user.getUsername());
+        User existing = myUserDetailsService.findByUsername(user.getUsername());
         if (existing != null){
             result.rejectValue("username", null, "There is already an account registered with that username");
         }
@@ -49,8 +43,7 @@ public class RegistedUserController {
         if (result.hasErrors()){
             return "registration";
         }
-     //   user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDAO.save(prepareToSave(user, passwordEncoder));
+        myUserDetailsService.save(user);
         return "redirect:/registration?success";
     }
 }

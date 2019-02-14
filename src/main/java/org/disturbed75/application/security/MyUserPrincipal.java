@@ -1,10 +1,14 @@
 package org.disturbed75.application.security;
 
 import org.disturbed75.application.entity.User;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+
+import static java.util.Objects.requireNonNull;
 
 public class MyUserPrincipal implements UserDetails {
     private User user;
@@ -46,5 +50,20 @@ public class MyUserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    public static MyUserPrincipal safeGet() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return null;
+        }
+        Object principal = auth.getPrincipal();
+        return (principal instanceof MyUserPrincipal) ? (MyUserPrincipal) principal : null;
+    }
+
+    public static MyUserPrincipal get() {
+        MyUserPrincipal user = safeGet();
+        requireNonNull(user, "No authorized user found");
+        return user;
     }
 }

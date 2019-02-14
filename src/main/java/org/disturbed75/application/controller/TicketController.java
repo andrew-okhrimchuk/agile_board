@@ -1,15 +1,12 @@
 package org.disturbed75.application.controller;
 
 import org.disturbed75.application.DAO.TicketDAO;
-import org.disturbed75.application.DAO.UserDAO;
-import org.disturbed75.application.entity.User;
 import org.disturbed75.application.service.ColumnService;
+import org.disturbed75.application.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 
 
 @Controller
@@ -17,12 +14,15 @@ public class TicketController {
 
     @Autowired
     private ColumnService columnService;
-
     @Autowired
-    private TicketDAO ticketService;
+    private TicketService ticketService;
+    @Autowired
+    private TicketDAO ticketDAO;
 
     @RequestMapping(path = "/greeting", method = RequestMethod.GET)
     public String index(Model model){
+        ticketService.start();
+
         model.addAttribute("toDoColumn", columnService.getAllColumns().get(0));
         model.addAttribute("inProcessColumn", columnService.getAllColumns().get(1));
         model.addAttribute("doneColumn", columnService.getAllColumns().get(2));
@@ -35,7 +35,7 @@ public class TicketController {
     @RequestMapping(path = "/addticket", method = RequestMethod.POST)
     public @ResponseBody String addNewTicket(@RequestParam String columnName, @RequestParam String name,
                         @RequestParam String description){
-        boolean result = ticketService.addNewTicket(columnName,name,description);
+        boolean result = ticketDAO.addNewTicket(columnName,name,description);
         if(result == true){
             return "true";
         }else{
@@ -45,7 +45,7 @@ public class TicketController {
 
     @RequestMapping(path = "/deleteticket", method = RequestMethod.POST)
     public  String deleteTicket(@RequestParam String name, @RequestParam String columnName){
-        ticketService.deleteTicket(columnName, name);
+        ticketDAO.deleteTicket(columnName, name);
        return "redirect:/greeting";
     }
 
@@ -54,7 +54,7 @@ public class TicketController {
                                            @RequestParam String oldName,
                                            @RequestParam String description,
                                            @RequestParam String columnName){
-        ticketService.editTicket(oldName,name,columnName,description);
+        ticketDAO.editTicket(oldName,name,columnName,description);
        return  "redirect:/greeting";
     }
 
@@ -63,8 +63,9 @@ public class TicketController {
                              @RequestParam String description,
                              @RequestParam String columnName,
                              @RequestParam String newColumn){
-        ticketService.moveTicket(name,description, columnName,newColumn);
+        ticketDAO.moveTicket(name,description, columnName,newColumn);
         return  "redirect:/greeting";
     }
+
 
 }

@@ -13,6 +13,7 @@ public class Column {
     private String id;
     private String name;
     private List<Ticket> tickets;
+    private String username;
 
     public Column() {
     }
