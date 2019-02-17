@@ -2,6 +2,7 @@ package org.disturbed75.application.controller;
 
 import org.disturbed75.application.DAO.TicketDAO;
 import org.disturbed75.application.service.ColumnService;
+import org.disturbed75.application.service.ServiceBin;
 import org.disturbed75.application.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,17 +16,21 @@ public class TicketController {
     @Autowired
     private ColumnService columnService;
     @Autowired
-    private TicketService ticketService;
-    @Autowired
     private TicketDAO ticketDAO;
+    @Autowired
+    private ServiceBin serviceBin;
 
     @RequestMapping(path = "/greeting", method = RequestMethod.GET)
     public String index(Model model){
-        ticketService.start();
+        serviceBin.getBin();
 
         model.addAttribute("toDoColumn", columnService.getAllColumns().get(0));
         model.addAttribute("inProcessColumn", columnService.getAllColumns().get(1));
         model.addAttribute("doneColumn", columnService.getAllColumns().get(2));
+
+        System.out.println(columnService.getAllColumns().get(0));
+        System.out.println(columnService.getAllColumns().get(1));
+        System.out.println(columnService.getAllColumns().get(2));
         model.addAttribute("toDoColumnTickets", columnService.getColumnByName("TO DO").getTickets());
         model.addAttribute("inProgressColumnTickets", columnService.getColumnByName("In Progress").getTickets());
         model.addAttribute("doneColumnTickets", columnService.getColumnByName("Done").getTickets());

@@ -5,7 +5,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 
 import static java.util.Objects.requireNonNull;
@@ -67,3 +66,4 @@ public class MyUserPrincipal implements UserDetails {
         return user;
     }
 }
+

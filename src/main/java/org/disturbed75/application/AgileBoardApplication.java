@@ -20,15 +20,11 @@ import java.util.ArrayList;
 @EnableAutoConfiguration
 public class AgileBoardApplication implements CommandLineRunner {
 
-	/*private final Column toDoColumn  = new Column(ValuesContainer.TO_DO_COLUMN_NAME);
-	private final Column inProgressColumn = new Column(ValuesContainer.IN_PROGRESS_COLUMN_NAME);
-	private final Column doneColumn = new Column(ValuesContainer.DONE_COLUMN_NAME);*/
-	//private final Column user = new Column(ValuesContainer.USER);
 
 	@Autowired
-	private ColumnService columnService;
-	@Autowired
 	private MyUserDetailsService myUserDetailsService;
+	@Autowired
+	private ColumnService columnService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AgileBoardApplication.class, args);
@@ -45,6 +41,20 @@ public class AgileBoardApplication implements CommandLineRunner {
 			user.setPassword("admin");
 			myUserDetailsService.save(user);
 		}
+
+		/*if(columnService.getColumnByName(ValuesContainer.TO_DO_COLUMN_NAME) == null ||
+				columnService.getColumnByName(ValuesContainer.IN_PROGRESS_COLUMN_NAME) == null ||
+				columnService.getColumnByName(ValuesContainer.DONE_COLUMN_NAME) == null)
+		{
+			new Column(ValuesContainer.TO_DO_COLUMN_NAME);
+			new Column(ValuesContainer.IN_PROGRESS_COLUMN_NAME);
+			new Column(ValuesContainer.DONE_COLUMN_NAME);
+		}*/
+
+
+
+
+
 	}
 }
 

@@ -14,6 +14,10 @@ public class ColumnService  {
     @Autowired
     private ColumnDAO columnDAO;
 
+    public void addNewColumn(Column column){
+        columnDAO.save(column);
+    }
+
     public Column getColumnByName(String name){
 
 
