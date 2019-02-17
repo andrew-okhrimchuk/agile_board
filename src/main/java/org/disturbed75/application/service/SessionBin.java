@@ -33,9 +33,9 @@ public class SessionBin {
         String userName = myUserPrincipal.getUsername();
 
 
-         if(    toDoColumn.getUsername().isEmpty() ||
-                 inProgressColumn.getUsername() .isEmpty()  ||
-                 doneColumn.getUsername() .isEmpty() )
+         if(    toDoColumn == null ||
+                 inProgressColumn  == null  ||
+                 doneColumn  == null )
          {
              toDoColumn       = new Column(ValuesContainer.TO_DO_COLUMN_NAME);
              inProgressColumn = new Column(ValuesContainer.IN_PROGRESS_COLUMN_NAME);
