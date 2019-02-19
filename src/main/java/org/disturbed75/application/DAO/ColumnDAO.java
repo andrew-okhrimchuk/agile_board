@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface ColumnDAO extends MongoRepository<Column, String> {
 
-    List<Column> getColumnByName(String name);
     List<Column> getColumnByUsername(String name);
-    List<Column> getColumnByNameAndUsernameEquals(String name, String username);
+    Column getColumnByNameAndUsernameEquals(String name, String username);
 }

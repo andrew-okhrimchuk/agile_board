@@ -28,9 +28,6 @@ public class TicketController {
         model.addAttribute("inProcessColumn", columnService.getAllColumns().get(1));
         model.addAttribute("doneColumn", columnService.getAllColumns().get(2));
 
-        System.out.println(columnService.getAllColumns().get(0));
-        System.out.println(columnService.getAllColumns().get(1));
-        System.out.println(columnService.getAllColumns().get(2));
         model.addAttribute("toDoColumnTickets", columnService.getColumnByName("TO DO").getTickets());
         model.addAttribute("inProgressColumnTickets", columnService.getColumnByName("In Progress").getTickets());
         model.addAttribute("doneColumnTickets", columnService.getColumnByName("Done").getTickets());

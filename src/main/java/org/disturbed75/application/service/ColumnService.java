@@ -18,22 +18,13 @@ public class ColumnService  {
         columnDAO.save(column);
     }
 
+
     public Column getColumnByName(String name){
-
-
         final String username = MyUserPrincipal.get().getUsername();
-        List<Column> lists =  columnDAO.getColumnByName(name);
-        if (lists == null){return null;}
-
-        for (Column xx:lists)
-        {System.out.println("xx = " + xx);        }
-
-        for (Column list:lists) {
-            if (list.getUsername().equals(username)) {
-                return  list;
-            }
-        }
-        return null;
+        Column lists =  columnDAO.getColumnByNameAndUsernameEquals(name, username);
+        if (lists == null){
+            return null;}
+        return lists;
     }
 
     public List<Column> getAllColumns(){

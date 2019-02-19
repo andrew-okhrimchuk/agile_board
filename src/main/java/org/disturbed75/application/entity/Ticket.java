@@ -9,7 +9,6 @@ public class Ticket {
 
     private String name;
     private String description;
-    private String user;
 
 
     public Ticket() {

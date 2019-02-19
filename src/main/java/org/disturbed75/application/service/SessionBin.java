@@ -23,7 +23,6 @@ public class SessionBin {
     private ColumnService columnService;
     private MyUserPrincipal myUserPrincipal = MyUserPrincipal.safeGet();
 
-    {System.out.println("Make by SessionBin");}
 
     @PostConstruct
     public void initColumns() throws Exception {
@@ -53,9 +52,6 @@ public class SessionBin {
              columnService.addNewColumn(inProgressColumn);
              columnService.addNewColumn(doneColumn);
 
-             System.out.println(toDoColumn);
-             System.out.println(inProgressColumn);
-             System.out.println(doneColumn);
 		}
     }
 }
