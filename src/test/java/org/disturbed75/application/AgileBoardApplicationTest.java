@@ -11,12 +11,10 @@ import java.util.Arrays;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = AgileBoardApplication.class, webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT)
-//@WebAppConfiguration
 public class AgileBoardApplicationTest {
 
     @Autowired
     ApplicationContext context;
-
 
     @Test
     public void main() throws Exception {
@@ -24,7 +22,7 @@ public class AgileBoardApplicationTest {
     }
 
 
-    @Test
+    //@Test
     public void run() throws Exception {
     }
 

@@ -20,6 +20,10 @@ public class Column {
     public Column(String name) {
         this.name = name;
     }
+    public Column(String name, String username) {
+        this.name = name;
+        this.username = username;
+    }
 
 
 }
