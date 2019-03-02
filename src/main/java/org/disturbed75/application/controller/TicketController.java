@@ -5,6 +5,7 @@ import org.disturbed75.application.service.ColumnService;
 import org.disturbed75.application.service.ServiceBin;
 import org.disturbed75.application.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,14 +36,10 @@ public class TicketController {
     }
 
     @RequestMapping(path = "/addticket", method = RequestMethod.POST)
-    public @ResponseBody String addNewTicket(@RequestParam String columnName, @RequestParam String name,
-                        @RequestParam String description){
-        boolean result = ticketDAO.addNewTicket(columnName,name,description);
-        if(result == true){
-            return "true";
-        }else{
-            return "false";
-        }
+    public @ResponseBody ResponseEntity<?> addNewTicket(@RequestParam String columnName, @RequestParam String name,
+                                @RequestParam String description){
+        return ResponseEntity.ok(ticketDAO.addNewTicket(columnName,name,description));
+
     }
 
     @RequestMapping(path = "/deleteticket", method = RequestMethod.POST)
