@@ -9,11 +9,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 
 @SpringBootApplication(scanBasePackages ={"org.disturbed75.application.service","org.disturbed75.application.controller", "org.disturbed75.application.security"})
 @EnableAutoConfiguration
-public class AgileBoardApplication implements CommandLineRunner {
+public class AgileBoardApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
 
 	@Autowired
@@ -37,6 +39,11 @@ public class AgileBoardApplication implements CommandLineRunner {
 			myUserDetailsService.save(user);
 		}
 
+	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(AgileBoardApplication.class);
 	}
 }
 
