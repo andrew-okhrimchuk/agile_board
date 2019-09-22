@@ -1,7 +1,6 @@
 package org.disturbed75.application.controller;
 
-import org.disturbed75.application.AgileBoardApplication;
-import org.junit.Test;
+import org.disturbed75.application.config.AgileBoardApplication;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +12,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 

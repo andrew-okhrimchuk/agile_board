@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
+
+//@RequestMapping("/agile_board")
 @Controller
 public class RegistedUserController {
 

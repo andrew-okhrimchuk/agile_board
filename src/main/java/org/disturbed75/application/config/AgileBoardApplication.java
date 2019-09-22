@@ -1,4 +1,4 @@
-package org.disturbed75.application;
+package org.disturbed75.application.config;
 
 
 import org.disturbed75.application.entity.User;
@@ -9,12 +9,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 
-@SpringBootApplication(scanBasePackages ={"org.disturbed75.application.service","org.disturbed75.application.controller", "org.disturbed75.application.security"})
-@EnableAutoConfiguration
+@SpringBootApplication(scanBasePackages ={"org.disturbed75.application.*"})
+@EnableAutoConfiguration (exclude={MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class AgileBoardApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
 

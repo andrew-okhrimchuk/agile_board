@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+//@RequestMapping("/agile_board")
 @Controller
 public class TicketController {
 

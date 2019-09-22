@@ -4,11 +4,10 @@ import org.disturbed75.application.DAO.UserDAO;
 import org.disturbed75.application.entity.User;
 import org.disturbed75.application.security.MyUserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import static org.disturbed75.application.util.UserUtil.prepareToSave;
 
