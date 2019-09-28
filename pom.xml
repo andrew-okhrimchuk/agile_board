@@ -5,7 +5,9 @@
 
 	<groupId>org.disturbed75</groupId>
 	<artifactId>agile_board</artifactId>
+<!--
 	<version>0.0.1-SNAPSHOT</version>
+-->
 	<packaging>war</packaging>
 
 	<name>agile_board</name>
@@ -92,10 +94,17 @@
             <artifactId>spring-boot</artifactId>
             <scope>compile</scope>
         </dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>compile</scope>
+		</dependency>
 
     </dependencies>
 
 	<build>
+		<finalName>agile_board</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
