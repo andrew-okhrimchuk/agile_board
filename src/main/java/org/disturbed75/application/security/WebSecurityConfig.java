@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity//(debug = true)
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -30,25 +30,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.
-                csrf().disable()
+        http.csrf()
+                .disable()
+                // указываем правила запросов
+                // по которым будет определятся доступ к ресурсам и остальным данным
                 .authorizeRequests()
-                .antMatchers(
-                        "/registration",
-                        "/js/**",
-                        "/css/**",
-                        "/img/**",
-                        "/webjars/**").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage("/login")
+                .antMatchers("/resources/**", "/**", "/registration").permitAll()
+                .anyRequest().permitAll()
+                .and();
+
+        http.formLogin()
+                // указываем страницу с формой логина
+                .loginPage("/login")
+                // указываем action с формы логина
+                .loginProcessingUrl("/login")
+                // указываем URL при неудачном логине
                 .failureUrl("/login?error")
-                .defaultSuccessUrl("/")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");;
+                .defaultSuccessUrl("/greeting", true)
+                // Указываем параметры логина и пароля с формы логина
+                .usernameParameter("username")
+                .passwordParameter("password")
+                // даем доступ к форме логина всем
+                .permitAll();
+
     }
 
     @Override
