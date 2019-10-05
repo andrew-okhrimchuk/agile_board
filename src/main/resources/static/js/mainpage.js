@@ -42,7 +42,7 @@ $(function(){
                 if(response == "false"){
                     error.show();
                 } else{
-                    window.location="http://localhost:8080/greeting";
+                    window.location="http://localhost:80/agile_board/greeting";
                 }
 
             }
@@ -52,7 +52,7 @@ $(function(){
 
     $('.deleteButton').click(function (e){
             var formToSubmit =  $(this).parent().parent().children(":first");
-            formToSubmit.attr('action', "/deleteticket");
+            formToSubmit.attr('action', "/agile_board/deleteticket");
             formToSubmit.find('input[name = "name"]').removeAttr('disabled');
             formToSubmit.submit();
     });
@@ -63,13 +63,13 @@ $(function(){
         var formToSubmit =  $(this).parent().parent().children(":first");
         var saveButton =  formToSubmit.find('input[value = "Save"]').show();
         var description = formToSubmit.find('textarea');
-        formToSubmit.attr('action', "/editticket");
+        formToSubmit.attr('action', "/agile_board/editticket");
         formToSubmit.find('input[name = "name"]').removeAttr('disabled');
         description.removeAttr('disabled');
         formToSubmit.find('input[value = "Delete"]').attr('disabled',"disabled");
         formToSubmit.find('input[value = "Move to"]').attr('disabled',"disabled");
         if( clickCount == 2) {
-            window.location = "http://localhost:8080/greeting";
+            window.location = "http://localhost:80/agile_board/greeting";
         }
         saveButton.click(function(e){
             formToSubmit.submit();
@@ -88,7 +88,7 @@ $(function(){
         $('.menuButtons').click(function(){
            var submitForm = $(this).parent().parent().parent().parent().children(":first");
            var newColumn =  $(this).val();
-           submitForm.attr('action', "/moveticket");
+           submitForm.attr('action', "/agile_board/moveticket");
             submitForm.find('input[name = "newColumn"]').attr('value', newColumn);
            submitForm.find('input[name = "name"]').removeAttr('disabled');
             submitForm.find('textarea').removeAttr('disabled');

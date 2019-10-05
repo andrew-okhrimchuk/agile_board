@@ -1,6 +1,7 @@
 package org.disturbed75.application.controller;
 
-import org.disturbed75.application.config.AgileBoardApplication;
+import org.disturbed75.AgileBoardApplication;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,13 +12,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import javax.annotation.PostConstruct;
-
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AgileBoardApplication.class, webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT)
-//@WebAppConfiguration
+@SpringBootTest(
+        classes = AgileBoardApplication.class,
+        webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class AbstractControllerTest {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
@@ -34,8 +34,8 @@ public abstract class AbstractControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    @PostConstruct
-    private void postConstruct() {
+    @Before
+    public void postConstruct() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .addFilter(CHARACTER_ENCODING_FILTER)

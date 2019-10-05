@@ -1,4 +1,4 @@
-package org.disturbed75.application.config;
+package org.disturbed75;
 
 import org.disturbed75.application.entity.User;
 import org.disturbed75.application.service.MyUserDetailsService;
@@ -13,7 +13,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 
-@SpringBootApplication(scanBasePackages = {"org.disturbed75.application.*"})
+@SpringBootApplication
 @EnableAutoConfiguration (exclude={MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class AgileBoardApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
@@ -34,8 +34,10 @@ public class AgileBoardApplication extends SpringBootServletInitializer implemen
 			user = new User();
 			user.setUsername("admin");
 			user.setPassword("admin");
+			System.out.println(user.getUsername());
 			this.myUserDetailsService.save(user);
 		}
+		else System.out.println(user.getUsername() + "ggg");
 
 	}
 
