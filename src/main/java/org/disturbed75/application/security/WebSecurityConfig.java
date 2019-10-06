@@ -9,15 +9,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.*;
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableWebSecurity//(debug = true)
@@ -26,6 +20,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private MyUserDetailsService userDetailsService;
+
+    @Autowired
+    public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -48,45 +49,47 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error")
                 .defaultSuccessUrl("/greeting", true)
                 // Указываем параметры логина и пароля с формы логина
-                .usernameParameter("username")
-                .passwordParameter("password")
+               // .usernameParameter("username")
+              //  .passwordParameter("password")
                 // даем доступ к форме логина всем
                 .permitAll();
+
+        http.logout()
+                // разрешаем делать логаут всем
+                .permitAll()
+                // указываем URL логаута
+                .logoutUrl("/logout")
+                // указываем URL при удачном логауте
+                .logoutSuccessUrl("/login?logout")
+                // делаем не валидной текущую сессию
+                .invalidateHttpSession(true);
+
 
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)throws Exception {
         auth
-                .eraseCredentials(false)
+               // .eraseCredentials(false)
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
+
+//authProvider
+            @Bean
+            public DaoAuthenticationProvider authenticationProvider() {
+                DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+                authProvider.setUserDetailsService(userDetailsService);
+                authProvider.setPasswordEncoder(passwordEncoder());
+                return authProvider;
+            }
+
+
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(delegatingPasswordEncoder());
-        return authProvider;
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(12);
     }
 
-    @Bean
-    public PasswordEncoder delegatingPasswordEncoder() {
-        PasswordEncoder defaultEncoder = new StandardPasswordEncoder();
-        Map<String, PasswordEncoder> encoders = new HashMap<>();
-        encoders.put("bcrypt", new BCryptPasswordEncoder());
-        encoders.put("scrypt", new SCryptPasswordEncoder());
-        encoders.put("pcrypt", new Pbkdf2PasswordEncoder());
 
-        DelegatingPasswordEncoder passworEncoder = new DelegatingPasswordEncoder(
-                "bcrypt", encoders);
-        passworEncoder.setDefaultPasswordEncoderForMatches(defaultEncoder);
-
-        return passworEncoder;
-
-    }
-    @Bean
-    public static NoOpPasswordEncoder passwordEncoder() {
-        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance(); }
 }

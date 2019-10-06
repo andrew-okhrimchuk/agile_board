@@ -21,7 +21,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        User user = userDAO.findByUsername(username);
+        User user = findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException(username);
@@ -29,8 +29,8 @@ public class MyUserDetailsService implements UserDetailsService {
         return new MyUserPrincipal(user);
     }
     public void save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDAO.save(prepareToSave(user, passwordEncoder));
+        user.setPassword((prepareToSave(user, passwordEncoder)).getPassword());
+        userDAO.save(user);
     }
 
     public User findByUsername(String username) {
