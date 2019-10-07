@@ -25,7 +25,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
     }
 
     @Override
-    public MongoClient mongoClient() {
+    public Mongo mongo() throws Exception {
         return new MongoClient(env.getProperty("mongodb.host"), Integer.parseInt(env.getProperty("mongodb.port")));
     }
 
