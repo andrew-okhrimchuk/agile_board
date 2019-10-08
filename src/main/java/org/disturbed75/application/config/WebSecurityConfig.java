@@ -1,4 +1,4 @@
-package org.disturbed75.application.security;
+package org.disturbed75.application.config;
 import org.disturbed75.application.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // указываем action с формы логина
                 .loginProcessingUrl("/login")
                 // указываем URL при неудачном логине
-                .failureUrl("/login")
+                .failureUrl("/login?error")
                 .defaultSuccessUrl("/greeting", true)
                 // Указываем параметры логина и пароля с формы логина
                // .usernameParameter("username")

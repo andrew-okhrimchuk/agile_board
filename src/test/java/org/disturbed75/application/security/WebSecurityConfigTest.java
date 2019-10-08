@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.disturbed75.application.TestUtil.userHttpBasic;
-import static org.disturbed75.application.date.UserDate.admin;
+import static org.disturbed75.application.date.UserDate.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -25,14 +25,16 @@ public class WebSecurityConfigTest extends AbstractControllerTest {
     @WithMockUser(username = "admin", password = "admin")
     @Test
     public void testAuthOld() throws Exception {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodedPassword = encoder.encode("UserPassword");
-        User us = admin;
-        us.setPassword(encodedPassword);
+       // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+      //  String encodedPassword = encoder.encode("UserPassword");
+      //  User us = admin;
+      //  us.setPassword(encodedPassword);
         mockMvc.perform(post("/login")
             //    .with(userHttpBasic(admin)))
-                .with(userHttpBasic(us)))
+               // .with(userHttpBasic(user4))
+        .param("username" , user4.getUsername())
+        .param("password", user4.getPassword()))
                 .andDo(print())
-                .andExpect(redirectedUrl("http://localhost/greeting"));
+                .andExpect(redirectedUrl("/greeting"));
     }
 }

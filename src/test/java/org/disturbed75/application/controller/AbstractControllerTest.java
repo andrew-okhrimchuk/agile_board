@@ -1,6 +1,6 @@
 package org.disturbed75.application.controller;
 
-import org.disturbed75.AgileBoardApplication;
+import org.disturbed75.application.AgileBoardApplication;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

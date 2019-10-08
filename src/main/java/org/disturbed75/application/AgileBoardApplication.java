@@ -1,4 +1,4 @@
-package org.disturbed75;
+package org.disturbed75.application;
 
 import org.disturbed75.application.entity.User;
 import org.disturbed75.application.service.MyUserDetailsService;
@@ -13,7 +13,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 
-@SpringBootApplication
+@SpringBootApplication(excludeName ={
+		"org.disturbed75.application.container",
+		"org.disturbed75.application.entity",
+		"org.disturbed75.application.DAO",
+		"org.disturbed75.application.util"})
 @EnableAutoConfiguration (exclude={MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class AgileBoardApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
